@@ -75,6 +75,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative; /* Necesario para la capa de bloqueo */
+        }
+
+        /* Capa transparente superior para evitar clics directos sobre la imagen */
+        .image-box::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
         }
 
         .image-box img {
@@ -83,6 +95,12 @@
             max-height: 280px;
             object-fit: cover;
             display: block;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none; /* Evita el menú flotante en iOS/Android al mantener presionado */
+            pointer-events: none; /* Desactiva interacción directa con el ratón en la imagen */
         }
 
         h1 {
@@ -197,9 +215,9 @@
             <span>WhatsApp Gruppe</span>
         </div>
 
-        <!-- Imagen de la Oferta -->
+        <!-- Imagen de la Oferta protegida -->
         <div class="image-box">
-            <img src="https://files.catbox.moe/2vglof.jpg" alt="Privates Vorschaubild">
+            <img src="https://files.catbox.moe/2vglof.jpg" alt="Privates Vorschaubild" id="protected-img">
         </div>
 
         <!-- Título -->
@@ -251,11 +269,19 @@
                 }
             }
         }, 4000);
+
+        // Bloquear clic derecho específicamente en la imagen
+        const protectedImg = document.getElementById('protected-img');
+        protectedImg.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
     </script>
 </body>
-<style>html{
+<style>
+html{
  color:darkviolet;
  font-size:25px;
  font-weight:600;
 }
-</style><script>/*Here write your javascript code*/</script></html>
+</style>
+</html>
